@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: vault-snapshot-cronjob
 spec:
-  schedule: "@every 12h"
+  schedule: "* * * * *"
   jobTemplate:
     spec:
       template:
