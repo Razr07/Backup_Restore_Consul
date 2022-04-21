@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: 
+    app: vault-restore
+  name: vault-restore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault-restore
+  template:
+    metadata:
+      labels:
+        app: vault-restore
+      name: vault-restore
+    spec:
+      volumes:
+        - name: restore
+          emptyDir: {}
+      containers: 
+      - name: download
+        image: amazon/aws-cli:2.2.14
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/sh
+        args:
+        - -ec
+        - |
+          until [ -f /share/vault-snapshot.snap ]; do sleep 5; done;
+          aws s3 ls s3://xti-datavault
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          value: "YOUR_AWS_ACCESS_KEY_ID"
+        - name: AWS_SECRET_ACCESS_KEY
+          value: "YOUR_AWS_SECRET_ACCESS_KEY"
+        volumeMounts:
+        - mountPath: /restore
+          name: restore
