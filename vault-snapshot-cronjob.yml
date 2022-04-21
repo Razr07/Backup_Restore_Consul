@@ -22,7 +22,7 @@ spec:
             - |
               curl http://consul-consul-server.default.svc.cluster.local:8500/v1/snapshot?dc=vault-kubernetes --output /share/[file_name].tgz
               until [ -f /share/[file_name].tgz ]; do sleep 5; done;
-              aws s3 cp /share/vault-snapshot.tgz s3://******/[file_name]$(date +"%Y%m%d_%H%M%S").snap;
+              aws s3 cp /share/[file_name].tgz s3://******/[file_name]$(date +"%Y%m%d_%H%M%S").snap;
               aws s3 ls s3://*******
             env:
             - name: AWS_ACCESS_KEY_ID
