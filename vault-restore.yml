@@ -28,7 +28,7 @@ spec:
         - -ec
         - |
           until [ -f /share/vault-snapshot.snap ]; do sleep 5; done;
-          aws s3 ls s3://xti-datavault
+          aws s3 ls s3://*******
         env:
         - name: AWS_ACCESS_KEY_ID
           value: "YOUR_AWS_ACCESS_KEY_ID"
